@@ -26,7 +26,7 @@ class UserAuthenticationController < ApplicationController
     #see if we follow @user
     list_of_following_ids = @current_user.following
 
-    if list_of_following_ids.include?(@user.id)
+    if list_of_following_ids.include?(@user.id) or @user.private == false
       render({ :template => "user_authentication/show.html.erb" })
     
     else
