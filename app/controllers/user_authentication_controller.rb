@@ -40,6 +40,20 @@ class UserAuthenticationController < ApplicationController
     @user = User.where({ :username => the_username }).at(0)
     render({ :template => "user_authentication/liked_photos.html.erb" })
   end
+
+  def show_feed
+    the_username = params.fetch("the_username")
+    @user = User.where({ :username => the_username }).at(0)
+    render({ :template => "user_authentication/feed.html.erb" })
+  end
+
+  def show_discover
+    the_username = params.fetch("the_username")
+    @user = User.where({ :username => the_username }).at(0)
+    render({ :template => "user_authentication/discover.html.erb" })
+  end
+
+  ### User sign in stuff
   
   def sign_in_form
     render({ :template => "user_authentication/sign_in.html.erb" })
