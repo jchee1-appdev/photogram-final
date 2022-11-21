@@ -32,7 +32,6 @@ class UserAuthenticationController < ApplicationController
     else
       redirect_to("/", { :alert => "You're not authorized for that."})
     end
-    #render({ :template => "user_authentication/show.html.erb" })
 
   end
   
@@ -75,8 +74,8 @@ class UserAuthenticationController < ApplicationController
     @user.email = params.fetch("query_email")
     @user.password = params.fetch("query_password")
     @user.password_confirmation = params.fetch("query_password_confirmation")
-    @user.comments_count = params.fetch("query_comments_count")
-    @user.likes_count = params.fetch("query_likes_count")
+    @user.comments_count = 0
+    @user.likes_count = 0
     @user.private = params.fetch("query_private", false)
     @user.username = params.fetch("query_username")
 
