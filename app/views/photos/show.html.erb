@@ -35,11 +35,40 @@
   <dt>Add a fan</dt>
   <dd>
 
-    <form action="/insert_like" method="post">
-      <input type="hidden" value="<%= @the_photo.id%>" name="query_photo_id">
-      <button>Like</button>
-    </form>
+    <% if @the_photo.likes.map_relation_to_array(:fan_id).include?(session.fetch(:user_id)) %>
+      <a href="/delete_like/<%=@the_photo.my_like(session.fetch(:user_id)).id %>">
+        Unlike
+      </a>
+    <% else %>
+      <form action="/insert_like" method="post">
+        <input type="hidden" value="<%= @the_photo.id%>" name="query_photo_id">
+        <button>Like</button>
+      </form>
+
+    <% end %>
   </dd>
+
+  <% if session.fetch(:user_id) != nil and session.fetch(:user_id) == @the_photo.id %>
+  <dt>Edit photo</dt>
+  <dd>
+  <form action="/modify_photo/<%=@the_photo.id%>" method="post" enctype="multipart/form-data">
+    <label for="browser_image">Image URL</label>
+    <input id="browser_image" type="file" name="query_image" placeholder="Enter a URL for the image..." value="<%=@the_photo.image %>">
+
+    <label for="browser_caption">Caption</label>
+    <textarea id="browser_caption" name="query_caption" placeholder="Enter a caption for the photo..."><%= @the_photo.caption%></textarea>
+
+    <button>Update photo</button>
+  </form>
+  </dd>
+
+  <dt>Delete photo</dt>
+  <dd>
+    <a href="/delete_photo/<%=@the_photo.id%>">
+      Delete this photo
+    </a>
+  </dd>
+<% end %>
 
 </dl>
 

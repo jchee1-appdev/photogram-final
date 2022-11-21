@@ -41,4 +41,13 @@ class Photo < ApplicationRecord
   def is_public?
     return !self.poster.private
   end
+
+  def my_like(id)
+    for like in self.likes do
+      if like.fan_id == id
+        return like
+      end
+     end
+  end
+
 end
