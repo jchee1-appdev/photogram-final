@@ -29,13 +29,30 @@
 
       <td>
         <% if @current_user != nil %>
-          <form action="/insert_follow_request" method="post">
-            <input type="hidden" name="query_recipient_id" value="<%=user.id%>">
+          <!-- if sent follow request and pending -->
+          <% if @current_user.pending_sent_follow_requests.map_relation_to_array(:recipient_id).include?(user.id) %>
+            
+            Request sent.
+            <a href="/delete_follow_request/<%=@current_user.pending_sent_follow_requests.where({ :recipient_id => user.id}).at(0).id%>">
+              Cancel
+            </a>
+          
+          <!-- sent and accepted  -->
+          <% elsif @current_user.accepted_sent_follow_requests.map_relation_to_array(:recipient_id).include?(user.id) %>
+            <a href="/delete_follow_request/<%=@current_user.accepted_sent_follow_requests.where({ :recipient_id => user.id}).at(0).id%>">
+              Unfollow
+            </a>
 
-            <button>
-              Follow
-            </button>
-          </form>
+          <!-- did not send request -->
+          <% else %>
+            <form action="/insert_follow_request" method="post">
+              <input type="hidden" name="query_recipient_id" value="<%=user.id%>">
+
+              <button>
+                Follow
+              </button>
+            </form>
+          <% end %>
         <% end %>
       </td>
 
