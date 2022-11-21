@@ -37,4 +37,8 @@ class Photo < ApplicationRecord
   def fan_list
     return self.fans.map_relation_to_array(:username).to_sentence
   end
+
+  def is_public?
+    return !self.poster.private
+  end
 end
