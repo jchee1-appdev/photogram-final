@@ -41,6 +41,28 @@
     </form>
   </dd>
 
+<% if session.fetch(:user_id) != nil %>
+  <dt>Edit photo</dt>
+  <dd>
+  <form action="/modify_photo/<%=@the_photo.id%>" method="post" enctype="multipart/form-data">
+    <label for="browser_image">Image URL</label>
+    <input id="browser_image" type="file" name="query_image" placeholder="Enter a URL for the image..." value="<%=@the_photo.image %>">
+
+    <label for="browser_caption">Caption</label>
+    <textarea id="browser_caption" name="query_caption" placeholder="Enter a caption for the photo..."><%= @the_photo.caption%></textarea>
+  
+    <button>Update photo</button>
+  </form>
+  </dd>
+
+  <dt>Delete photo</dt>
+  <dd>
+    <a href="/delete_photo/<%=@the_photo.id%>">
+      Delete this photo
+    </a>
+  </dd>
+<% end %>
+
 </dl>
 
 <h2>Comments</h2>
